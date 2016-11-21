@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.auth0.com/js/lock/10.3/lock.min.js"></script>
+  </head>
+  <body>
+    <div class="clearfix">
+      <div class="pull-left">
+        <i class="fa fa-lg fa-pie-chart"></i><span>Awesome Polls</span>
+      </div>
+      <div class="pull-right">
+        <img src="https://lh6.googleusercontent.com/-0aBDbp_CtKk/AAAAAAAAAAI/AAAAAAAASRs/-WLnlNZ7x_I/photo.jpg" style="height:24px; border-radius: 30px;">
+        <strong style="margin: 0px 10px;"><%= user.nickname %></strong>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+    <br>
+    <div class="jumbotron">
+      <h1 class="text-center">2016 Presidential Election</h1>
+    </div>
+    <% for(var i = 0; i < polls.length; i++) { %>
+    <div class="col-sm-4">
+      <div style="min-height: 150px;" class="panel panel-default">
+        <div class="panel-title">
+          <div class="panel-heading"><%= polls[i].short_title %></div>
+        </div>
+        <div style="min-height: 100px;" class="panel-body">
+          <ul class="list-unstyled">
+          <% for(var j = 0; j < polls[i].estimates.length; j++) { %>
+            <li>
+              <p><strong><%= polls[i].estimates[j].choice %></strong></p>
+              <div class="progress">
+                <div style="width: <%= polls[i].estimates[j].value %>%" role="progressbar" class="progress-bar progress-bar-success">
+                  <span><%= polls[i].estimates[j].value %></span>
+                </div>
+              </div>
+            </li>
+          <% } %>
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <!-- <a class="btn btn-sm">View Results  </a>
+          <a class="btn btn-sm write-report">Write Report</a> -->
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+  </body>
+</html>
