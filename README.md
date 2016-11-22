@@ -6,8 +6,8 @@ that can be dependant upon another action.  When the parent action (task) was co
 MonkeyGTD would find all of the sub-actions (sub-tasks) that are dependant upon the
 parent action and marking them as 'Next'.
 
-<h2>ToDo:</h1>
-	At some point this list will be in taskie.  ;-)
+<h2>ToDo:</h2>
+<p>At some point this list will be in taskie.</p>
 <ul>
 	<li><strike>Grunt support for debugging, building, deploying</strike></li>
 	<li><strike>Migrate away from dotenv and use a json config file (default + over ride per env)</strike></li>
