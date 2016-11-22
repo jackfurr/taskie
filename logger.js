@@ -1,21 +1,21 @@
 var winston = require('winston');
 require('winston-daily-rotate-file');
-var path = require ('path');
+var path = require('path');
 var logger;
 
 var logLevels = {
     levels: {
         error: 7,
-        warn:  6,
+        warn: 6,
         stats: 5,
-        info:  4,
+        info: 4,
         debug: 3,
         trace: 2,
-        fine:  1,
+        fine: 1,
         finer: 0
     },
-    labelsByName: {},   // to be filled in below
-    labelsByValue: {}   // to be filled in below
+    labelsByName: {}, // to be filled in below
+    labelsByValue: {} // to be filled in below
 };
 // create strings of uniform length for all the log levels
 var longestLevel = winston.longestElement(Object.keys(logLevels.levels));
@@ -25,22 +25,22 @@ for (var level in logLevels.levels) {
     logLevels.labelsByValue[logLevels.levels[level]] = label;
 }
 
-exports.startLogger = function (logConfig) {
+exports.startLogger = function(logConfig) {
     try {
-        logger = new (winston.Logger)({
+        logger = new(winston.Logger)({
             levels: logLevels.levels,
             transports: [
-                new (winston.transports.DailyRotateFile)({
+                new(winston.transports.DailyRotateFile)({
                     datePattern: '.yyyy-MM-ddTdd',
                     filename: logConfig.file,
-                    json: false,                // needs to be false for custom formatter ;(
-                    timestamp: function () {
+                    json: false, // needs to be false for custom formatter ;(
+                    timestamp: function() {
                         return new Date().toLocaleString();
                     },
-                    formatter: function formatWithInstanceInfo (options) {
+                    formatter: function formatWithInstanceInfo(options) {
                         var instanceInfo = '';
                         var userMeta = '';
-                        if (options.meta !== null && typeof (options.meta) === 'object' && Object.keys(options.meta).length > 0) {
+                        if (options.meta !== null && typeof(options.meta) === 'object' && Object.keys(options.meta).length > 0) {
                             if (options.meta.instanceInfo !== undefined) {
                                 instanceInfo = ' ' + options.meta.instanceInfo;
                                 var nestedMeta = options.meta.nestedMeta;
@@ -48,7 +48,7 @@ exports.startLogger = function (logConfig) {
                                     userMeta = ' ' + JSON.stringify(nestedMeta);
                                 }
                             } else {
-                                userMeta = ' '+ JSON.stringify(options.meta);
+                                userMeta = ' ' + JSON.stringify(options.meta);
                             }
                         }
                         // repeat the prefix on each line of the message
@@ -64,7 +64,7 @@ exports.startLogger = function (logConfig) {
             logger.add(winston.transports.Console, {
                 formatter: function formatWithoutInstanceInfo(options) {
                     var userMeta = '';
-                    if (options.meta !== null && typeof (options.meta) === 'object' && Object.keys(options.meta).length > 0) {
+                    if (options.meta !== null && typeof(options.meta) === 'object' && Object.keys(options.meta).length > 0) {
                         if (options.meta.instanceInfo !== undefined) {
                             var nestedMeta = options.meta.nestedMeta;
                             if (nestedMeta !== undefined && typeof nestedMeta === 'object' && Object.keys(nestedMeta).length > 0) {
@@ -80,15 +80,14 @@ exports.startLogger = function (logConfig) {
         }
         logger.level = logConfig.log_level;
         return true;
-    }
-    catch (e) {
+    } catch (e) {
         console.error('Could not start logger.');
         console.error(e);
         return false;
     }
 };
 
-exports.getLogger = function () {
+exports.getLogger = function() {
     return logger;
 };
 
@@ -102,14 +101,14 @@ function createSingleLogForwarder(targetName) {
             instanceInfo: this.myInstanceInfo
         };
         var userMetaCandidate = args[args.length - 1];
-        if(typeof userMetaCandidate === 'object' && Object.prototype.toString.call(userMetaCandidate) !== '[object RegExp]') {
+        if (typeof userMetaCandidate === 'object' && Object.prototype.toString.call(userMetaCandidate) !== '[object RegExp]') {
             // User supplied their own meta -- nest it in our meta.
             instanceMeta.nestedMeta = userMetaCandidate;
             args[args.length - 1] = instanceMeta;
         } else {
             args.push(instanceMeta);
         }
-        if(callback) {
+        if (callback) {
             args.push(callback);
         }
         // Now (args) has everything we want to pass to the underlying log function.  That underlying function has the same name Call it with them.
@@ -122,7 +121,7 @@ function createSingleLogForwarder(targetName) {
 exports.instanceLogForwarderSet = {
     log: createSingleLogForwarder('log')
 };
-for(var level in logLevels.levels) {
+for (var level in logLevels.levels) {
     exports.instanceLogForwarderSet[level] = createSingleLogForwarder(level);
 }
 exports.instanceLogForwarderNames = Object.keys(exports.instanceLogForwarderSet);
@@ -132,7 +131,7 @@ exports.createInstanceLogger = function(aInstanceInfo, aLogger) {
         myInstanceInfo: aInstanceInfo,
         nextLogger: (aLogger !== undefined ? aLogger : logger)
     };
-    for(var i = 0; i < exports.instanceLogForwarderNames.length; i++) {
+    for (var i = 0; i < exports.instanceLogForwarderNames.length; i++) {
         instanceLogger[exports.instanceLogForwarderNames[i]] = exports.instanceLogForwarderSet[exports.instanceLogForwarderNames[i]];
     }
     return instanceLogger;

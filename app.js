@@ -13,14 +13,14 @@ var update_env = require('./update_env.js')(default_path, env_path);
 
 update_env.update_config(function(err, config) {
   if (err) {
-      throw err
+    throw err
   } else {
 
     if (!log.startLogger(config.logger)) {
-        process.exit(-1);
+      process.exit(-1);
     }
 
-    config.auth0.callback = 'http://localhost:'+ config.server.port + config.auth0.callback_path
+    config.auth0.callback = 'http://localhost:' + config.server.port + config.auth0.callback_path
 
     var logger = log.getLogger();
     logger.debug('Server started with the following config:');
@@ -28,16 +28,16 @@ update_env.update_config(function(err, config) {
 
     // This will configure Passport to use Auth0
     var strategy = new Auth0Strategy({
-        domain:       config.auth0.domain,
-        clientID:     config.auth0.client_id,
-        clientSecret: config.auth0.client_secret,
-        callbackURL:  config.auth0.callback
-      }, function(accessToken, refreshToken, extraParams, profile, done) {
-        // accessToken is the token to call Auth0 API (not needed in the most cases)
-        // extraParams.id_token has the JSON Web Token
-        // profile has all the information from the user
-        return done(null, profile);
-      });
+      domain: config.auth0.domain,
+      clientID: config.auth0.client_id,
+      clientSecret: config.auth0.client_secret,
+      callbackURL: config.auth0.callback
+    }, function(accessToken, refreshToken, extraParams, profile, done) {
+      // accessToken is the token to call Auth0 API (not needed in the most cases)
+      // extraParams.id_token has the JSON Web Token
+      // profile has all the information from the user
+      return done(null, profile);
+    });
 
     passport.use(strategy);
 
@@ -56,9 +56,9 @@ update_env.update_config(function(err, config) {
 
     var app = express();
     var params = {
-        app: app,
-        config: config,
-        logger: logger
+      app: app,
+      config: config,
+      logger: logger
     }
 
     // view engine setup
@@ -69,12 +69,11 @@ update_env.update_config(function(err, config) {
 
     // uncomment after placing your favicon in /public
     //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-    // app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(session({
-      secret: '8627e92b-29dc-416e-a489-b18a12538a8c-24d20b53-5633-4cce-a2fa-b777cc3e28f8-78a414aa-c728-477a-8b95-4b904e77a3b7-8f890c31-6d4f-47fe-9109-899388fe0c14',
+      secret: config.session.secret,
       resave: true,
       saveUninitialized: true
     }));

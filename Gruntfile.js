@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         ignores: [
           'node_modules/**/*.js',
           'public/js/vendor/**/*.js'
-          ]
+        ]
       }
     },
     clean: {
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
               '!./README.md',
               '!./dist',
               '!./build'
-                ],
+            ],
             dest: 'build/'
           }
         ],
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
           archive: 'dist/taskie-<%= meta.revision %>-<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.<%= build_count %>.zip'
         },
         files: [
-          { expand: true, src : '**/*', cwd : 'build/' }
+          { expand: true, src: '**/*', cwd: 'build/' }
         ]
       },
       'taskie': {
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           archive: 'dist/taskie-<%= meta.revision %>-<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.<%= build_count %>.zip'
         },
         files: [
-          { expand: true, src : '**/*', cwd : 'build/' }
+          { expand: true, src: '**/*', cwd: 'build/' }
         ]
       }
     },
@@ -67,48 +67,44 @@ module.exports = function(grunt) {
       }
     },
     'string-replace': {
-        'taskie-version': {
-          files: {
-            'build/':'version.json'
-          },
-          options: {
-            replacements: [{
-              pattern: /{{ BUILD_DATE }}/g,
-              replacement: '<%= grunt.template.today("yyyy-mm-dd HH:mm:ss Z") %>'
-            },
-            {
-              pattern: /{{ REVISION }}/g,
-              replacement: '<%= meta.revision %>'
-            },
-            {
-              pattern: /{{ BUILD }}/g,
-              replacement: '<%= build_count %>'
-            },
-            {
-              pattern: /{{ MAJOR_MINOR }}/g,
-              replacement: "<%= pkg.version.split('.')[0] + '.' + pkg.version.split('.')[1] + '.' %>"
-            }]
-          }
+      'taskie-version': {
+        files: {
+          'build/': 'version.json'
+        },
+        options: {
+          replacements: [{
+            pattern: /{{ BUILD_DATE }}/g,
+            replacement: '<%= grunt.template.today("yyyy-mm-dd HH:mm:ss Z") %>'
+          }, {
+            pattern: /{{ REVISION }}/g,
+            replacement: '<%= meta.revision %>'
+          }, {
+            pattern: /{{ BUILD }}/g,
+            replacement: '<%= build_count %>'
+          }, {
+            pattern: /{{ MAJOR_MINOR }}/g,
+            replacement: "<%= pkg.version.split('.')[0] + '.' + pkg.version.split('.')[1] + '.' %>"
+          }]
         }
       }
-    });
+    }
+  });
 
-    // load the tasks
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-git-revision');
-    grunt.loadNpmTasks('grunt-string-replace');
-    grunt.loadNpmTasks('grunt-git-revision-count');
+  // load the tasks
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-git-revision');
+  grunt.loadNpmTasks('grunt-string-replace');
+  grunt.loadNpmTasks('grunt-git-revision-count');
 
-    // define the tasks
+  // define the tasks
 
-    grunt.registerTask(
-      'build',
-      'Makes a taskie server build.',
-      ['clean:all', 'copy:taskie', 'revision-count', 'revision', 'string-replace:taskie-version', 'compress:taskie']
-    );
+  grunt.registerTask(
+    'build',
+    'Makes a taskie server build.', ['clean:all', 'copy:taskie', 'revision-count', 'revision', 'string-replace:taskie-version', 'compress:taskie']
+  );
 
   // Default task(s).
   grunt.registerTask('default', ['jshint']);
