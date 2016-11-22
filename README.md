@@ -8,8 +8,7 @@ parent action and marking them as 'Next'.
 
 <h2>ToDo:</h1>
 <ul>
-	<li>Grunt support for debugging, building, deploying</li>
-	<li></li>
+	<li><strike>Grunt support for debugging, building, deploying</strike></li>
 	<li>Migrate away from dotenv and use a json config file (default + over ride per env)</li>
 	<li>database support</li>
 		<ul>
