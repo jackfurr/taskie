@@ -1,5 +1,6 @@
 module.exports = function (params) {
     var app = params.app;
+    var logger = params.logger;
     var module = {};
 
     var passport = require('passport');
@@ -18,7 +19,7 @@ module.exports = function (params) {
             return callback();
         }
 
-        console.log({method: req.method, url: req.url, remoteAddress: (req.headers['x-forwarded-for'] || req.connection.remoteAddress), headers: req.headers, body: req.body, params: req.params, query: req.query});
+        logger.debug({method: req.method, url: req.url, remoteAddress: (req.headers['x-forwarded-for'] || req.connection.remoteAddress), headers: req.headers, body: req.body, params: req.params, query: req.query});
         return callback();
     });
 

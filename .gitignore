@@ -2,3 +2,4 @@ config/env.json
 node_modules
 build
 dist
+taskie.log.*

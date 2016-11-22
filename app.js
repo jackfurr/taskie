@@ -1,13 +1,12 @@
 var express = require('express');
 var path = require('path');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-//var dotenv = require('dotenv');
 var passport = require('passport');
 var Auth0Strategy = require('passport-auth0');
 
+var log = require('./logger.js');
 var default_path = 'config/env.default.json'
 var env_path = 'config/env.json'
 var update_env = require('./update_env.js')(default_path, env_path);
@@ -17,10 +16,15 @@ update_env.update_config(function(err, config) {
       throw err
   } else {
 
+    if (!log.startLogger(config.logger)) {
+        process.exit(-1);
+    }
+
     config.auth0.callback = 'http://localhost:'+ config.server.port + config.auth0.callback_path
 
-    console.log('Server loaded with the following config:');
-    console.log(config);
+    var logger = log.getLogger();
+    logger.debug('Server started with the following config:');
+    logger.debug(config);
 
     // This will configure Passport to use Auth0
     var strategy = new Auth0Strategy({
@@ -53,7 +57,8 @@ update_env.update_config(function(err, config) {
     var app = express();
     var params = {
         app: app,
-        config: config
+        config: config,
+        logger: logger
     }
 
     // view engine setup
@@ -64,7 +69,7 @@ update_env.update_config(function(err, config) {
 
     // uncomment after placing your favicon in /public
     //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-    app.use(logger('dev'));
+    // app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());

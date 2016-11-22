@@ -10,6 +10,7 @@ parent action and marking them as 'Next'.
 <ul>
 	<li><strike>Grunt support for debugging, building, deploying</strike></li>
 	<li><strike>Migrate away from dotenv and use a json config file (default + over ride per env)</strike></li>
+	<li><strike>logging support with hourly log rotation</strike></li>
 	<li>database support</li>
 		<ul>
 			<li>database schema migration (using bash still?)</li>
