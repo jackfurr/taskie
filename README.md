@@ -8,7 +8,9 @@ parent action and marking them as 'Next'.
 
 <h2>ToDo:</h1>
 <ul>
-	<li>Grunt or Gulp support for debugging, building, deploying</li>
+	<li>Grunt support for debugging, building, deploying</li>
+	<li></li>
+	<li>Migrate away from dotenv and use a json config file (default + over ride per env)</li>
 	<li>database support</li>
 		<ul>
 			<li>database schema migration (using bash still?)</li>
