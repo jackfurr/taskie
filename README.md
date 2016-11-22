@@ -9,7 +9,7 @@ parent action and marking them as 'Next'.
 <h2>ToDo:</h1>
 <ul>
 	<li><strike>Grunt support for debugging, building, deploying</strike></li>
-	<li>Migrate away from dotenv and use a json config file (default + over ride per env)</li>
+	<li><strike>Migrate away from dotenv and use a json config file (default + over ride per env)</strike></li>
 	<li>database support</li>
 		<ul>
 			<li>database schema migration (using bash still?)</li>
