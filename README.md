@@ -16,7 +16,9 @@ parent action and marking them as 'Next'.
 		<ul>
 			<li><strike>database schema migration</strike></li>
 			<li>Passport -> database</li>
+			<li>model -> database</li>
 		</ul>
+	<li>model, view (does an API server need views?), controller</li>
 	<li>Add caching support (memcache or redis)</li>
 	<li>100% API support</li>
 	<li>Backbone front end</li>
