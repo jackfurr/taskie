@@ -24,11 +24,6 @@ module.exports = function(grunt) {
             src: [
               './**',
               '!./node_modules/**',
-              '!./mdm_server/node_modules/**',
-              '!./mdm_server/certs/server.*',
-              '!./mdm_server/config/env.json',
-              '!./mdm_server/Tapper.*',
-              '!./mdm_server/Gruntfile.js',
               '!./Gruntfile.js',
               '!./README.md',
               '!./dist',
@@ -42,7 +37,7 @@ module.exports = function(grunt) {
     compress: {
       all: {
         options: {
-          archive: 'dist/all-<%= meta.revision %>.zip'
+          archive: 'dist/taskie-<%= meta.revision %>-<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.<%= build_count %>.zip'
         },
         files: [
           { expand: true, src : '**/*', cwd : 'build/' }
@@ -50,7 +45,7 @@ module.exports = function(grunt) {
       },
       'taskie': {
         options: {
-          archive: 'dist/taskie-<%= meta.revision %>.zip'
+          archive: 'dist/taskie-<%= meta.revision %>-<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.<%= build_count %>.zip'
         },
         files: [
           { expand: true, src : '**/*', cwd : 'build/' }
