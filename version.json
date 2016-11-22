@@ -1,0 +1,5 @@
+{
+    "revision": "{{ REVISION }}",
+    "build": "{{ MAJOR_MINOR }}{{ BUILD }}",
+    "build_date": "{{ BUILD_DATE }}"
+}
