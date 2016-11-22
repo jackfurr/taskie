@@ -24,6 +24,7 @@ module.exports = function(grunt) {
             src: [
               './**',
               '!./node_modules/**',
+              '!./public/js/vendor/node_modules/**',
               '!./Gruntfile.js',
               '!./README.md',
               '!./dist',
