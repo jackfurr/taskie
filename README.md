@@ -2,7 +2,7 @@
 My personal task organizer based on the MonkeyGTD which is based on TiddlyWiki.
 
 One of my favorite features of MonkeyGTD was the ability to create an action (task)
-that can be dependant upon another taskl.  When the parent action (task) was complete,
+that can be dependant upon another action.  When the parent action (task) was complete,
 MonkeyGTD would find all of the sub-actions (sub-tasks) that are dependant upon the
 parent action and marking them as 'Next'.
 
