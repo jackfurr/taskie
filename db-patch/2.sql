@@ -1,16 +1,6 @@
-
------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `schema_version`;
-
-DROP TABLE IF EXISTS `task`;
-DROP TABLE IF EXISTS `project`;
-DROP TABLE IF EXISTS `realm`;
-DROP TABLE IF EXISTS `context`;
-DROP TABLE IF EXISTS `action`;
-DROP TABLE IF EXISTS `user`;
-
------------------------------------------------------------------
+--
+-- Create the supporting tables and insert some data.
+--
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -32,13 +22,13 @@ CREATE TABLE `action` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   KEY `action_id` (`action_id`),
-  UNIQUE KEY `unique:action:name` (`name`),
+  UNIQUE KEY `unique:action:name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO action (action_id, user_id, name, created_at, updated_at) VALUES('1', '1', 'Next', NOW();
-INSERT INTO action (action_id, user_id, name, created_at, updated_at) VALUES('2', '1', 'Waiting', NOW();
-INSERT INTO action (action_id, user_id, name, created_at, updated_at) VALUES('3', '1', 'Future', NOW();
-INSERT INTO action (action_id, user_id, name, created_at, updated_at) VALUES('4', '1', 'Done', NOW();
+INSERT INTO action (action_id, name, created_at) VALUES('1', 'Next', NOW());
+INSERT INTO action (action_id, name, created_at) VALUES('2', 'Waiting', NOW());
+INSERT INTO action (action_id, name, created_at) VALUES('3', 'Future', NOW());
+INSERT INTO action (action_id, name, created_at) VALUES('4', 'Done', NOW());
 
 
 DROP TABLE IF EXISTS `context`;
@@ -112,35 +102,8 @@ CREATE TABLE `task` (
   CONSTRAINT `fk:task:project_id` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('1', '1', 'Couch', '1', '1', NOW(), NOW());
-INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('2', '1', 'Glass coffee table', '1', '1', NOW(), NOW());
-INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('3', '1', 'Wooden coffee table', '1', '1', NOW(), NOW());
-INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('4', '1', 'Nick-nack stand in master', '1', '1', NOW(), NOW());
-
-
------------------------------------------------------------------
-
-Dashboard:
-- select * from tasks ordered by 'action_id', 'project_id' for a user_id
-
------------------------------------------------------------------
-
-buy washer (id: 1, depends_on_task_id: null)
-	wash pants (id: 2, depends_on_task_id: 1)
-	wash shirts (id: 3, depends_on_task_id: 1)
-
-1. start transaction
-2. update record to 'done'
-3. update task set action = 'next' where depends_on_task_id = done task_id
-4. commit or rollback
-
------------------------------------------------------------------
-Find hosting solution (node, mysql...)
-	* Heroku
-	* AWS
-	* Google Cloud
-
-
-
-
+INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('1', '1', 'Couch', '1', '1','1', NOW(), NOW());
+INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('2', '1', 'Glass coffee table', '1', '1', '1', NOW(), NOW());
+INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('3', '1', 'Wooden coffee table', '1', '1', '1', NOW(), NOW());
+INSERT INTO task (task_id, user_id, name, realm_id, project_id, action_id, created_at, updated_at) VALUES('4', '1', 'Nick-nack stand in master', '1', '1', '1', NOW(), NOW());
 

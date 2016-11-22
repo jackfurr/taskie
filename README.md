@@ -7,13 +7,14 @@ MonkeyGTD would find all of the sub-actions (sub-tasks) that are dependant upon 
 parent action and marking them as 'Next'.
 
 <h2>ToDo:</h1>
+	At some point this list will be in taskie.  ;-)
 <ul>
 	<li><strike>Grunt support for debugging, building, deploying</strike></li>
 	<li><strike>Migrate away from dotenv and use a json config file (default + over ride per env)</strike></li>
 	<li><strike>logging support with hourly log rotation</strike></li>
 	<li>database support</li>
 		<ul>
-			<li>database schema migration (using bash still?)</li>
+			<li><strike>database schema migration</strike></li>
 			<li>Passport -> database</li>
 		</ul>
 	<li>Add caching support (memcache or redis)</li>
