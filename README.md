@@ -12,7 +12,7 @@ parent action and marking them as 'Next'.
 	<li><strike>Grunt support for debugging, building, deploying</strike></li>
 	<li><strike>Migrate away from dotenv and use a json config file (default + over ride per env)</strike></li>
 	<li><strike>logging support with hourly log rotation</strike></li>
-	<li>database support</li>
+	<li><strike>database support</strike></li>
 		<ul>
 			<li><strike>database schema migration</strike></li>
 			<li><strike>Passport -> database</strike></li>
