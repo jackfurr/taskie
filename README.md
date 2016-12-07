@@ -15,8 +15,8 @@ parent action and marking them as 'Next'.
 	<li>database support</li>
 		<ul>
 			<li><strike>database schema migration</strike></li>
-			<li>Passport -> database</li>
-			<li>model -> database</li>
+			<li><strike>Passport -> database</strike></li>
+			<li><strike>model -> database</strike></li>
 		</ul>
 	<li>model, view (does an API server need views?), controller</li>
 	<li>Add caching support (memcache or redis)</li>
