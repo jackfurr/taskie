@@ -31,7 +31,7 @@ exports.startLogger = function(logConfig) {
             levels: logLevels.levels,
             transports: [
                 new(winston.transports.DailyRotateFile)({
-                    datePattern: '.yyyy-MM-ddTdd',
+                    datePattern: logConfig.date_pattern,
                     filename: logConfig.file,
                     json: false, // needs to be false for custom formatter ;(
                     timestamp: function() {

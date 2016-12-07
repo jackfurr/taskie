@@ -6,6 +6,12 @@ module.exports = function(params) {
   var passport = require('passport');
   var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
   var request = require('request');
+  var auth = require('./middlewares/authorization');
+  /*
+   * Route middlewares
+   */
+  var sessionAuth = [auth.requiresLogin, auth.session.hasAuthorization];
+
 
   var env = {
     AUTH0_CLIENT_ID: params.config.auth0.client_id,
@@ -25,11 +31,17 @@ module.exports = function(params) {
 
   /* GET home page. */
   app.get('/', function(req, res, next) {
-    res.render('index', { env: env });
+    if (!req.user) {
+      res.render('index', { env: env });
+    } else {
+      console.log(req.user);
+      res.redirect("/polls");
+    }
   });
 
-  app.get('/login', function(req, res) {
-    res.render('login', { env: env });
+  app.get('/login',
+    passport.authenticate('auth0', {}), function (req, res) {
+    res.redirect("/");
   });
 
   app.get('/logout', function(req, res) {
@@ -53,8 +65,14 @@ module.exports = function(params) {
   });
 
   app.get((params.config.auth0.callback_path),
-    passport.authenticate('auth0', { failureRedirect: '/url-if-something-fails' }),
+    passport.authenticate('auth0', { failureRedirect: '/login' }),
     function(req, res) {
+      console.log('passport.authenticate() req: ');
+      console.log(req);
+      if (!req.user) {
+        throw new Error('user null');
+      }
+
       res.redirect(req.session.returnTo || '/polls');
     });
 
